@@ -13,6 +13,7 @@ let gameFinished = false;
 
 let legsToWinSet = 3;
 let setsToWinMatch = 1;
+let startingPlayerIndex = 0;
 
 function startGame() {
   gameType = document.getElementById("gameType").value;
@@ -20,9 +21,17 @@ function startGame() {
   legsToWinSet = Number(document.getElementById("legsToWinSet").value);
   setsToWinMatch = Number(document.getElementById("setsToWinMatch").value);
 
-  const selectedPlayers = Array.from(
-    document.querySelectorAll(".playerCheck:checked")
-  ).map(input => input.value);
+ let selectedPlayers = Array.from(
+  document.querySelectorAll(".playerCheck:checked")
+).map(input => input.value);
+
+const randomOrder = document.getElementById("randomOrder").checked;
+
+if (randomOrder) {
+  selectedPlayers = shuffleArray(selectedPlayers);
+}
+
+startingPlayerIndex = 0;
 
   if (selectedPlayers.length < 1) {
     showToast("Bitte mindestens einen Spieler auswählen.");
@@ -221,12 +230,18 @@ function startNextLeg() {
     player.lastThrows = [];
   });
 
-  currentPlayerIndex = 0;
+  startingPlayerIndex++;
+
+  if (startingPlayerIndex >= players.length) {
+    startingPlayerIndex = 0;
+  }
+
+  currentPlayerIndex = startingPlayerIndex;
   currentDart = 1;
   currentMultiplier = 1;
   roundNumber = 1;
   currentRoundThrows = [];
-  roundStartScore = players[0].score;
+  roundStartScore = players[currentPlayerIndex].score;
 
   setMultiplier(1);
   renderGame();
@@ -361,7 +376,8 @@ function saveHistory() {
     currentRoundThrows: [...currentRoundThrows],
     gameFinished,
     legsToWinSet,
-    setsToWinMatch
+    setsToWinMatch,
+    startingPlayerIndex
   });
 }
 
@@ -383,6 +399,7 @@ function undoLastThrow() {
   gameFinished = lastState.gameFinished;
   legsToWinSet = lastState.legsToWinSet;
   setsToWinMatch = lastState.setsToWinMatch;
+  startingPlayerIndex = lastState.startingPlayerIndex;
 
   hideWinner();
 
@@ -411,4 +428,14 @@ function hideWinner() {
 
   winnerModal.classList.remove("show");
   winnerModal.classList.add("hidden");
+}
+function shuffleArray(array) {
+  const copy = [...array];
+
+  for (let i = copy.length - 1; i > 0; i--) {
+    const randomIndex = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[randomIndex]] = [copy[randomIndex], copy[i]];
+  }
+
+  return copy;
 }
