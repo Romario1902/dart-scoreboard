@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dart Scoreboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <div class="app">
+
+    <h1>Dart Scoreboard</h1>
+
+    <section id="setupScreen" class="card">
+
+      <h2>Spiel starten</h2>
+
+      <label>Spiel auswählen</label>
+
+      <select id="gameType">
+        <option value="301">301 Single Out</option>
+        <option value="around">Around the Clock</option>
+        <option value="cricket">Cricket</option>
+      </select>
+
+      <div class="match-settings">
+
+        <label>Legs zum Setgewinn</label>
+
+        <select id="legsToWinSet">
+          <option value="1">1 Leg</option>
+          <option value="2">2 Legs</option>
+          <option value="3" selected>3 Legs</option>
+          <option value="4">4 Legs</option>
+          <option value="5">5 Legs</option>
+        </select>
+
+        <label>Sets zum Matchgewinn</label>
+
+        <select id="setsToWinMatch">
+          <option value="1" selected>1 Set</option>
+          <option value="2">2 Sets</option>
+          <option value="3">3 Sets</option>
+          <option value="4">4 Sets</option>
+          <option value="5">5 Sets</option>
+        </select>
+
+      </div>
+
+      <h3>Mitspieler</h3>
+
+      <label>
+        <input type="checkbox" class="playerCheck" value="Jürgen" checked />
+        Jürgen
+      </label>
+
+      <label>
+        <input type="checkbox" class="playerCheck" value="Susi" checked />
+        Susi
+      </label>
+
+      <label>
+        <input type="checkbox" class="playerCheck" value="Charleen" />
+        Charleen
+      </label>
+
+      <label>
+        <input type="checkbox" class="playerCheck" value="Dennis" />
+        Dennis
+      </label>
+
+      <button onclick="startGame()">Spiel starten</button>
+
+    </section>
+
+    <section id="gameScreen" class="hidden">
+
+      <div class="card">
+        <h2 id="currentPlayerName"></h2>
+        <p id="dartInfo"></p>
+      </div>
+
+      <div id="scoreBoard" class="score-board"></div>
+
+      <div class="card">
+
+        <h3>Treffer eingeben</h3>
+
+        <div class="multiplier-row">
+          <button onclick="setMultiplier(1)" id="singleBtn" class="active">
+            Single
+          </button>
+
+          <button onclick="setMultiplier(2)" id="doubleBtn">
+            Double
+          </button>
+
+          <button onclick="setMultiplier(3)" id="tripleBtn">
+            Triple
+          </button>
+        </div>
+
+        <div id="numberButtons" class="number-grid"></div>
+
+        <button class="miss" onclick="throwDart(0)">
+          Daneben
+        </button>
+
+      </div>
+
+      <button class="undo" onclick="undoLastThrow()">
+        Letzten Wurf zurück
+      </button>
+
+      <button class="secondary" onclick="resetGame()">
+        Neues Spiel
+      </button>
+
+    </section>
+
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <div id="winnerModal" class="winner-modal hidden">
+
+    <div class="winner-box">
+
+      <h2 id="winnerText"></h2>
+
+      <button onclick="resetGame()">
+        Neues Spiel
+      </button>
+
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
