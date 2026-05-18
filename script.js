@@ -15,35 +15,47 @@ let legsToWinSet = 3;
 let setsToWinMatch = 1;
 let startingPlayerIndex = 0;
 
+const cricketTargets = [20, 19, 18, 17, 16, 15, "bull"];
+
 function startGame() {
   gameType = document.getElementById("gameType").value;
 
-  legsToWinSet = Number(document.getElementById("legsToWinSet").value);
-  setsToWinMatch = Number(document.getElementById("setsToWinMatch").value);
+  legsToWinSet = Number(document.getElementById("legsToWinSet")?.value || 3);
+  setsToWinMatch = Number(document.getElementById("setsToWinMatch")?.value || 1);
 
- let selectedPlayers = Array.from(
-  document.querySelectorAll(".playerCheck:checked")
-).map(input => input.value);
+  let selectedPlayers = Array.from(
+    document.querySelectorAll(".playerCheck:checked")
+  ).map(input => input.value);
 
-const randomOrder = document.getElementById("randomOrder").checked;
+  const randomOrder = document.getElementById("randomOrder")?.checked;
 
-if (randomOrder) {
-  selectedPlayers = shuffleArray(selectedPlayers);
-}
-
-startingPlayerIndex = 0;
+  if (randomOrder) {
+    selectedPlayers = shuffleArray(selectedPlayers);
+  }
 
   if (selectedPlayers.length < 1) {
     showToast("Bitte mindestens einen Spieler auswählen.");
     return;
   }
 
+  startingPlayerIndex = 0;
+
   players = selectedPlayers.map(name => ({
-    name: name,
+    name,
     score: gameType === "301" ? 301 : 0,
     target: 1,
     legs: 0,
     sets: 0,
+    cricketScore: 0,
+    cricket: {
+      20: 0,
+      19: 0,
+      18: 0,
+      17: 0,
+      16: 0,
+      15: 0,
+      bull: 0
+    },
     throws: [],
     lastThrows: []
   }));
@@ -91,17 +103,9 @@ function setMultiplier(multiplier) {
   document.getElementById("doubleBtn").classList.remove("active");
   document.getElementById("tripleBtn").classList.remove("active");
 
-  if (multiplier === 1) {
-    document.getElementById("singleBtn").classList.add("active");
-  }
-
-  if (multiplier === 2) {
-    document.getElementById("doubleBtn").classList.add("active");
-  }
-
-  if (multiplier === 3) {
-    document.getElementById("tripleBtn").classList.add("active");
-  }
+  if (multiplier === 1) document.getElementById("singleBtn").classList.add("active");
+  if (multiplier === 2) document.getElementById("doubleBtn").classList.add("active");
+  if (multiplier === 3) document.getElementById("tripleBtn").classList.add("active");
 }
 
 function throwDart(number) {
@@ -126,21 +130,22 @@ function throwDart(number) {
   player.throws.push({
     round: roundNumber,
     dart: currentDart,
-    number: number,
+    number,
     multiplier: currentMultiplier,
-    points: points
+    points
   });
 
   if (gameType === "301") {
     const stopTurn = handle301(player, points);
-
-    if (stopTurn) {
-      return;
-    }
+    if (stopTurn) return;
   }
 
   if (gameType === "around") {
     handleAroundTheClock(player, number);
+  }
+
+  if (gameType === "cricket") {
+    handleCricket(player, number, currentMultiplier);
   }
 
   if (currentDart >= 3) {
@@ -155,22 +160,10 @@ function throwDart(number) {
 }
 
 function buildThrowText(number, multiplier) {
-  if (number === 0) {
-    return "Miss";
-  }
-
-  if (number === 25) {
-    return multiplier === 2 ? "DBull" : "Bull";
-  }
-
-  if (multiplier === 2) {
-    return "D" + number;
-  }
-
-  if (multiplier === 3) {
-    return "T" + number;
-  }
-
+  if (number === 0) return "Miss";
+  if (number === 25) return multiplier === 2 ? "DBull" : "Bull";
+  if (multiplier === 2) return "D" + number;
+  if (multiplier === 3) return "T" + number;
   return String(number);
 }
 
@@ -206,10 +199,7 @@ function finishLeg(player) {
 
   if (player.legs >= legsToWinSet) {
     player.sets++;
-    players.forEach(p => {
-      p.legs = 0;
-    });
-
+    players.forEach(p => p.legs = 0);
     showToast(player.name + " gewinnt ein Set 🎯");
   } else {
     showToast(player.name + " gewinnt ein Leg 🎯");
@@ -257,6 +247,70 @@ function handleAroundTheClock(player, number) {
   }
 }
 
+function handleCricket(player, number, multiplier) {
+  let target = number;
+
+  if (number === 25) {
+    target = "bull";
+  }
+
+  if (!cricketTargets.includes(target)) {
+    return;
+  }
+
+  const currentMarks = player.cricket[target];
+  const newMarks = currentMarks + multiplier;
+
+  if (currentMarks < 3) {
+    const marksToClose = Math.min(multiplier, 3 - currentMarks);
+    const extraHits = multiplier - marksToClose;
+
+    player.cricket[target] += marksToClose;
+
+    if (extraHits > 0 && canScoreOnTarget(player, target)) {
+      player.cricketScore += extraHits * getCricketValue(target);
+    }
+  } else {
+    if (canScoreOnTarget(player, target)) {
+      player.cricketScore += multiplier * getCricketValue(target);
+    }
+  }
+
+  checkCricketWinner(player);
+}
+
+function canScoreOnTarget(player, target) {
+  return players.some(otherPlayer => {
+    return otherPlayer !== player && otherPlayer.cricket[target] < 3;
+  });
+}
+
+function getCricketValue(target) {
+  if (target === "bull") {
+    return 25;
+  }
+
+  return Number(target);
+}
+
+function checkCricketWinner(player) {
+  const allClosed = cricketTargets.every(target => player.cricket[target] >= 3);
+
+  if (!allClosed) {
+    return;
+  }
+
+  const highestOtherScore = Math.max(
+    ...players
+      .filter(p => p !== player)
+      .map(p => p.cricketScore)
+  );
+
+  if (player.cricketScore >= highestOtherScore) {
+    showWinner(player.name);
+  }
+}
+
 function nextPlayer() {
   currentPlayerIndex++;
 
@@ -274,7 +328,7 @@ function renderGame() {
   const currentPlayer = players[currentPlayerIndex];
 
   document.getElementById("currentPlayerName").textContent =
-    "🎯 " + currentPlayer.name + " ist am Zug";
+  currentPlayer.name + " ist am Zug";
 
   document.getElementById("dartInfo").textContent =
     "Runde " + roundNumber + " • Dart " + currentDart + "/3";
@@ -284,7 +338,6 @@ function renderGame() {
 
   players.forEach((player, index) => {
     const div = document.createElement("div");
-
     div.className = "player-score";
 
     if (index === currentPlayerIndex) {
@@ -307,7 +360,7 @@ function renderGame() {
     }
 
     if (gameType === "cricket") {
-      displayValue = `<div class="big-score">Cricket</div>`;
+      displayValue = renderCricketBoard(player);
     }
 
     const lastThrows =
@@ -316,20 +369,50 @@ function renderGame() {
         : "-";
 
     div.innerHTML = `
-      <div>
+      <div class="player-left">
         <strong>${player.name}</strong>
         <div class="last-throws">
           Letzte Runde: ${lastThrows}
         </div>
       </div>
 
-      <div>
+      <div class="player-right">
         ${displayValue}
       </div>
     `;
 
     scoreBoard.appendChild(div);
   });
+}
+
+function renderCricketBoard(player) {
+  let rows = "";
+
+  cricketTargets.forEach(target => {
+    const label = target === "bull" ? "Bull" : target;
+    const marks = renderCricketMarks(player.cricket[target]);
+
+    rows += `
+      <div class="cricket-row">
+        <span>${label}</span>
+        <strong>${marks}</strong>
+      </div>
+    `;
+  });
+
+  return `
+    <div class="cricket-score">${player.cricketScore} Punkte</div>
+    <div class="cricket-board">
+      ${rows}
+    </div>
+  `;
+}
+
+function renderCricketMarks(count) {
+  if (count <= 0) return "-";
+  if (count === 1) return "X";
+  if (count === 2) return "XX";
+  return "XXX";
 }
 
 function resetGame() {
@@ -429,6 +512,7 @@ function hideWinner() {
   winnerModal.classList.remove("show");
   winnerModal.classList.add("hidden");
 }
+
 function shuffleArray(array) {
   const copy = [...array];
 

@@ -22,9 +22,9 @@ h1 {
 
 .card {
   background: #1f2937;
-  padding: 16px;
+  padding: 12px;
   border-radius: 16px;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   box-shadow: 0 4px 14px rgba(0,0,0,0.3);
 }
 
@@ -195,4 +195,67 @@ button:active {
 
 .match-settings {
   margin-top: 16px;
+}
+.player-left {
+  flex: 1;
+}
+
+.player-right {
+  min-width: 130px;
+  text-align: right;
+}
+
+.cricket-score {
+  font-size: 22px;
+  font-weight: bold;
+  color: #22c55e;
+  margin-bottom: 8px;
+}
+
+.cricket-board {
+  display: grid;
+  gap: 4px;
+  font-size: 13px;
+}
+
+.cricket-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.cricket-row strong {
+  color: #facc15;
+  min-width: 36px;
+  text-align: right;
+}
+#currentPlayerName {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+#dartInfo {
+  margin-top: 6px;
+  margin-bottom: 0;
+  font-size: 14px;
+  color: #d1d5db;
+}
+.players-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.players-header h3 {
+  margin: 0;
+}
+
+.random-order-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #d1d5db;
 }

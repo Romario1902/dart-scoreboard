@@ -11,8 +11,6 @@
 
   <div class="app">
 
-    <h1>Dart Scoreboard</h1>
-
     <section id="setupScreen" class="card">
 
       <h2>Spiel starten</h2>
@@ -49,31 +47,35 @@
 
       </div>
 
-      <h3>Mitspieler</h3>
+  <div class="players-header">
 
-      <label>
-        <input type="checkbox" class="playerCheck" value="Jürgen" checked />
-        Jürgen
-      </label>
+  <h3>Mitspieler</h3>
 
-      <label>
-        <input type="checkbox" class="playerCheck" value="Susi" checked />
-        Susi
-      </label>
+  <label class="random-order-label">
+    <input type="checkbox" id="randomOrder" checked />
+    Zufällig
+  </label>
 
-      <label>
-        <input type="checkbox" class="playerCheck" value="Charleen" />
-        Charleen
-      </label>
+</div>
 
-      <label>
-        <input type="checkbox" class="playerCheck" value="Dennis" />
-        Dennis
-      </label>
-      <label>
-        
-  <input type="checkbox" id="randomOrder" checked />
-  Zufällige Startreihenfolge
+<label>
+  <input type="checkbox" class="playerCheck" value="Jürgen" checked />
+  Jürgen
+</label>
+
+<label>
+  <input type="checkbox" class="playerCheck" value="Susi" checked />
+  Susi
+</label>
+
+<label>
+  <input type="checkbox" class="playerCheck" value="Charleen" />
+  Charleen
+</label>
+
+<label>
+  <input type="checkbox" class="playerCheck" value="Dennis" />
+  Dennis
 </label>
 
       <button onclick="startGame()">Spiel starten</button>
