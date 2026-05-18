@@ -66,7 +66,7 @@ button:active {
 }
 
 .miss {
-  background: #ef4444;
+  background: #7c2d12;
 }
 
 .score-board {
@@ -152,7 +152,7 @@ button:active {
   }
 }
 .undo {
-  background: #f59e0b;
+  background: #374151;
 }
 
 .winner-modal {
@@ -258,4 +258,221 @@ button:active {
   gap: 6px;
   font-size: 14px;
   color: #d1d5db;
+}
+@media (min-width: 900px) {
+
+  .app {
+    max-width: 1100px;
+  }
+
+  .score-board {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .number-grid {
+    grid-template-columns: repeat(7, 1fr);
+  }
+
+}
+.stat-row,
+.match-row {
+  background: #374151;
+  padding: 12px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  display: grid;
+  gap: 4px;
+}
+
+.stat-row span,
+.match-row span,
+.match-row small {
+  color: #d1d5db;
+}
+
+.head-to-head-box {
+  background: #374151;
+  padding: 16px;
+  border-radius: 14px;
+  margin-top: 14px;
+  text-align: center;
+}
+
+.head-to-head-box div {
+  font-size: 32px;
+  font-weight: bold;
+  margin: 10px 0;
+  color: #22c55e;
+}
+
+.head-to-head-box small {
+  color: #d1d5db;
+}
+.compact-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 14px 0 6px;
+  font-size: 14px;
+  color: #d1d5db;
+}
+
+.compact-checkbox input {
+  width: auto;
+}
+.stat-row {
+  background: #374151;
+  padding: 16px;
+  border-radius: 18px;
+  margin-bottom: 12px;
+}
+
+.stat-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stat-card-top strong {
+  font-size: 20px;
+}
+
+.winrate {
+  font-size: 28px;
+  font-weight: bold;
+  color: #22c55e;
+}
+
+.stat-card-bottom {
+  display: flex;
+  gap: 16px;
+  margin-top: 10px;
+  color: #d1d5db;
+  font-size: 14px;
+}
+input[type="date"] {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  font-size: 16px;
+  margin-top: 8px;
+  background: white;
+  color: #111827;
+}
+.date-filter-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.date-filter-item {
+  flex: 1;
+}
+
+.date-filter-item small {
+  display: block;
+  margin-bottom: 4px;
+  color: #d1d5db;
+}
+
+.date-filter-item input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  font-size: 14px;
+}
+@media (min-width: 900px) {
+
+  .app {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .date-filter-row {
+    max-width: 420px;
+    margin: 0 auto 14px;
+  }
+
+  .filter-button-row {
+    max-width: 540px;
+    margin: 0 auto;
+  }
+
+  .card button {
+    max-width: unset;
+  }
+
+  .card {
+    padding: 18px;
+  }
+}
+.filter-button-row {
+  display: flex;
+  gap: 10px;
+}
+
+.filter-button-row button {
+  flex: 1;
+}
+.stats-grid {
+  display: grid;
+  gap: 16px;
+}
+
+@media (min-width: 900px) {
+
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+
+}
+.player-link {
+  color: white;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.player-link:hover {
+  color: #22c55e;
+}
+.profile-stat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.profile-stat-card {
+  background: #374151;
+  padding: 18px;
+  border-radius: 18px;
+  text-align: center;
+}
+
+.profile-stat-card small {
+  display: block;
+  color: #d1d5db;
+  margin-bottom: 8px;
+}
+
+.profile-stat-card strong {
+  font-size: 28px;
+  color: #22c55e;
+}
+.game-filter-item {
+  margin-bottom: 14px;
+}
+
+.game-filter-item small {
+  display: block;
+  margin-bottom: 4px;
+  color: #d1d5db;
+}
+
+.game-filter-item select {
+  margin-top: 0;
 }

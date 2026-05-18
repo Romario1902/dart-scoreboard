@@ -45,8 +45,10 @@ function startGame() {
     score: gameType === "301" ? 301 : 0,
     target: 1,
     legs: 0,
-    sets: 0,
-    cricketScore: 0,
+sets: 0,
+totalLegsWon: 0,
+totalSetsWon: 0,
+cricketScore: 0,
     cricket: {
       20: 0,
       19: 0,
@@ -196,9 +198,11 @@ function handle301(player, points) {
 function finishLeg(player) {
   player.lastThrows = [...currentRoundThrows];
   player.legs++;
+  player.totalLegsWon++;
 
   if (player.legs >= legsToWinSet) {
     player.sets++;
+    player.totalSetsWon++;
     players.forEach(p => p.legs = 0);
     showToast(player.name + " gewinnt ein Set 🎯");
   } else {
@@ -490,7 +494,7 @@ function undoLastThrow() {
   renderGame();
 }
 
-function showWinner(name) {
+async function showWinner(name) {
   gameFinished = true;
 
   const winnerText = document.getElementById("winnerText");
@@ -500,6 +504,8 @@ function showWinner(name) {
 
   winnerModal.classList.remove("hidden");
   winnerModal.classList.add("show");
+
+  await saveMatchToSupabase(name);
 }
 
 function hideWinner() {
@@ -522,4 +528,51 @@ function shuffleArray(array) {
   }
 
   return copy;
+}
+async function saveMatchToSupabase(winnerName) {
+  if (!window.supabaseClient && typeof supabaseClient === "undefined") {
+    showToast("Supabase ist nicht verbunden.");
+    return;
+  }
+
+  const client = window.supabaseClient || supabaseClient;
+
+  const matchData = {
+    game_type: gameType,
+    winner: winnerName
+  };
+
+  const { data: match, error: matchError } = await client
+    .from("matches")
+    .insert(matchData)
+    .select()
+    .single();
+
+  if (matchError) {
+    console.error(matchError);
+    showToast("Match konnte nicht gespeichert werden.");
+    return;
+  }
+
+const playerRows = players.map(player => ({
+  match_id: match.id,
+  player_name: player.name,
+  result: player.name === winnerName ? "winner" : "loser",
+sets: player.totalSetsWon || 0,
+legs: player.totalLegsWon || 0,
+  score: player.score || 0,
+  cricket_score: player.cricketScore || 0
+}));
+
+  const { error: playersError } = await client
+    .from("match_players")
+    .insert(playerRows);
+
+  if (playersError) {
+    console.error(playersError);
+    showToast("Spielergebnisse konnten nicht gespeichert werden.");
+    return;
+  }
+
+  showToast("Match gespeichert ✅");
 }

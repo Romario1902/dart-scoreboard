@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Spielerprofil</title>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <div class="app">
+
+    <section class="card">
+
+      <h2 id="playerName"></h2>
+      <div class="game-filter-item">
+
+  <small>Spielmodus</small>
+
+  <select id="playerGameFilter" onchange="loadPlayerStats()">
+    <option value="">Alle Spiele</option>
+    <option value="301">301</option>
+    <option value="cricket">Cricket</option>
+    <option value="around">Around the Clock</option>
+  </select>
+
+</div>
+
+      <div id="playerStats"></div>
+
+    </section>
+
+    <section class="card">
+      <button class="secondary" onclick="window.location.href='stats.html'">
+        Zurück zu den Statistiken
+      </button>
+    </section>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase.js"></script>
+  <script src="player.js"></script>
+
+</body>
+</html>
