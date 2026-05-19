@@ -476,3 +476,32 @@ input[type="date"] {
 .game-filter-item select {
   margin-top: 0;
 }
+@media (max-width: 600px) {
+
+  .date-filter-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .game-filter-item {
+    margin-top: 10px;
+  }
+
+  .game-filter-item select {
+    width: 100%;
+    font-size: 15px;
+    padding: 12px;
+  }
+
+  .filter-button-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .filter-button-row button {
+    font-size: 15px;
+    padding: 12px 8px;
+  }
+}

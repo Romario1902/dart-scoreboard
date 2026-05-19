@@ -13,46 +13,51 @@
 
   <div class="app">
 
-<section class="card">
+    <section class="card">
 
-  <h3>Zeitraum filtern</h3>
+      <h3>Zeitraum filtern</h3>
 
-  <div class="date-filter-row">
+      <div class="date-filter-row">
 
-    <div class="date-filter-item">
-      <small>Von</small>
-      <input type="date" id="dateFrom" />
-    </div>
+        <div class="date-filter-item">
+          <small>Von</small>
+          <input type="date" id="dateFrom" />
+        </div>
 
-    <div class="date-filter-item">
-      <small>Bis</small>
-      <input type="date" id="dateTo" />
-    </div>
-<div class="game-filter-item">
+        <div class="date-filter-item">
+          <small>Bis</small>
+          <input type="date" id="dateTo" />
+        </div>
 
-  <small>Spielmodus</small>
+      </div>
 
-  <select id="gameFilter">
-    <option value="">Alle Spiele</option>
-    <option value="301">301</option>
-    <option value="cricket">Cricket</option>
-    <option value="around">Around the Clock</option>
-  </select>
+      <div class="game-filter-item">
 
-</div>
-  </div>
+        <small>Spielmodus</small>
 
-  <div class="filter-button-row">
-    <button onclick="applyDateFilter()">
-      Filter anwenden
-    </button>
+        <select id="gameFilter">
+          <option value="">Alle Spiele</option>
+          <option value="301">301</option>
+          <option value="cricket">Cricket</option>
+          <option value="around">Around the Clock</option>
+        </select>
 
-    <button class="secondary" onclick="resetDateFilter()">
-      Zurücksetzen
-    </button>
-  </div>
+      </div>
 
-</section>
+      <div class="filter-button-row">
+
+        <button onclick="applyDateFilter()">
+          Filter anwenden
+        </button>
+
+        <button class="secondary" onclick="resetDateFilter()">
+          Zurücksetzen
+        </button>
+
+      </div>
+
+    </section>
+
     <section class="card">
       <h3>Gesamtbilanz</h3>
       <div id="overallStats"></div>
@@ -60,40 +65,47 @@
 
     <div class="stats-grid">
 
-  <section class="card">
+      <section class="card">
 
-    <h3>Direktduell</h3>
+        <h3>Direktduell</h3>
 
-    <label>Spieler 1</label>
-    <select id="playerOneSelect"></select>
+        <label>Spieler 1</label>
+        <select id="playerOneSelect"></select>
 
-    <label>Spieler 2</label>
-    <select id="playerTwoSelect"></select>
+        <label>Spieler 2</label>
+        <select id="playerTwoSelect"></select>
 
-    <label class="compact-checkbox">
-      <input type="checkbox" id="onlyOneVsOne" />
-      Nur echte 1:1 Duelle berücksichtigen
-    </label>
+        <label class="compact-checkbox">
+          <input type="checkbox" id="onlyOneVsOne" />
+          Nur echte 1:1 Duelle berücksichtigen
+        </label>
 
-    <button onclick="calculateHeadToHead()">
-      Bilanz anzeigen
-    </button>
+        <button onclick="calculateHeadToHead()">
+          Bilanz anzeigen
+        </button>
 
-    <div id="headToHeadResult"></div>
+        <div id="headToHeadResult"></div>
 
-  </section>
+      </section>
 
-  <section class="card">
-    <h3>Letzte Matches</h3>
-    <div id="recentMatches"></div>
-  </section>
+      <section class="card">
 
-</div>
-<section class="card">
-  <button class="secondary" onclick="window.location.href='index.html'">
-    Zurück zum Spiel
-  </button>
-</section>
+        <h3>Letzte Matches</h3>
+
+        <div id="recentMatches"></div>
+
+      </section>
+
+    </div>
+
+    <section class="card">
+
+      <button class="secondary" onclick="window.location.href='index.html'">
+        Zurück zum Spiel
+      </button>
+
+    </section>
+
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
