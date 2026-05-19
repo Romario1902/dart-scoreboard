@@ -15,21 +15,16 @@ body {
   padding: 16px;
 }
 
-h1 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
 .card {
   background: #1f2937;
-  padding: 12px;
+  padding: 14px;
   border-radius: 16px;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
   box-shadow: 0 4px 14px rgba(0,0,0,0.3);
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 label {
@@ -38,16 +33,13 @@ label {
 }
 
 select,
-button {
+button,
+input[type="date"] {
   width: 100%;
-  padding: 14px;
+  padding: 12px;
   border-radius: 12px;
   border: none;
-  font-size: 16px;
-}
-
-select {
-  margin-top: 8px;
+  font-size: 15px;
 }
 
 button {
@@ -69,6 +61,12 @@ button:active {
   background: #7c2d12;
 }
 
+.undo {
+  background: #374151;
+}
+
+/* Spielansicht */
+
 .score-board {
   display: grid;
   gap: 12px;
@@ -81,10 +79,46 @@ button:active {
   border-radius: 14px;
   display: flex;
   justify-content: space-between;
+  gap: 12px;
 }
 
 .player-score.active {
   border: 2px solid #22c55e;
+}
+
+.player-left {
+  flex: 1;
+}
+
+.player-right {
+  min-width: 130px;
+  text-align: right;
+}
+
+.big-score {
+  font-size: 34px;
+  font-weight: bold;
+  color: #22c55e;
+}
+
+.last-throws,
+.match-info {
+  margin-top: 6px;
+  font-size: 13px;
+  color: #d1d5db;
+}
+
+#currentPlayerName {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+#dartInfo {
+  margin-top: 6px;
+  margin-bottom: 0;
+  font-size: 14px;
+  color: #d1d5db;
 }
 
 .multiplier-row {
@@ -112,17 +146,61 @@ button:active {
   background: #4b5563;
   padding: 12px 0;
 }
-.big-score {
-  font-size: 34px;
-  font-weight: bold;
-  color: #22c55e;
+
+/* Startseite */
+
+.match-settings {
+  margin-top: 16px;
 }
 
-.last-throws {
-  margin-top: 6px;
-  font-size: 13px;
+.players-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.players-header h3 {
+  margin: 0;
+}
+
+.random-order-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
   color: #d1d5db;
 }
+
+/* Cricket */
+
+.cricket-score {
+  font-size: 22px;
+  font-weight: bold;
+  color: #22c55e;
+  margin-bottom: 8px;
+}
+
+.cricket-board {
+  display: grid;
+  gap: 4px;
+  font-size: 13px;
+}
+
+.cricket-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.cricket-row strong {
+  color: #facc15;
+  min-width: 36px;
+  text-align: right;
+}
+
+/* Toast / Gewinner */
+
 .toast {
   position: fixed;
   top: 45%;
@@ -151,9 +229,6 @@ button:active {
     transform: translate(-50%, -50%) scale(1);
   }
 }
-.undo {
-  background: #374151;
-}
 
 .winner-modal {
   position: fixed;
@@ -167,10 +242,6 @@ button:active {
 
 .winner-modal.show {
   display: flex;
-}
-
-.hidden {
-  display: none !important;
 }
 
 .winner-box {
@@ -187,144 +258,32 @@ button:active {
   margin-bottom: 24px;
   color: #22c55e;
 }
-.match-info {
-  margin-top: 8px;
-  font-size: 13px;
-  color: #d1d5db;
-}
 
-.match-settings {
-  margin-top: 16px;
-}
-.player-left {
-  flex: 1;
-}
+/* Statistikseite */
 
-.player-right {
-  min-width: 130px;
-  text-align: right;
-}
-
-.cricket-score {
-  font-size: 22px;
-  font-weight: bold;
-  color: #22c55e;
-  margin-bottom: 8px;
-}
-
-.cricket-board {
+.stats-grid {
   display: grid;
-  gap: 4px;
-  font-size: 13px;
+  gap: 16px;
 }
 
-.cricket-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.cricket-row strong {
-  color: #facc15;
-  min-width: 36px;
-  text-align: right;
-}
-#currentPlayerName {
-  margin: 0;
-  font-size: 18px;
-  font-weight: 600;
-}
-
-#dartInfo {
-  margin-top: 6px;
-  margin-bottom: 0;
-  font-size: 14px;
-  color: #d1d5db;
-}
-.players-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-}
-
-.players-header h3 {
-  margin: 0;
-}
-
-.random-order-label {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 14px;
-  color: #d1d5db;
-}
-@media (min-width: 900px) {
-
-  .app {
-    max-width: 1100px;
-  }
-
-  .score-board {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .number-grid {
-    grid-template-columns: repeat(7, 1fr);
-  }
-
-}
 .stat-row,
-.match-row {
-  background: #374151;
-  padding: 12px;
-  border-radius: 12px;
-  margin-bottom: 10px;
-  display: grid;
-  gap: 4px;
-}
-
-.stat-row span,
-.match-row span,
-.match-row small {
-  color: #d1d5db;
-}
-
+.match-row,
 .head-to-head-box {
-  background: #374151;
-  padding: 16px;
-  border-radius: 14px;
-  margin-top: 14px;
-  text-align: center;
-}
-
-.head-to-head-box div {
-  font-size: 32px;
-  font-weight: bold;
-  margin: 10px 0;
-  color: #22c55e;
-}
-
-.head-to-head-box small {
-  color: #d1d5db;
-}
-.compact-checkbox {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 14px 0 6px;
-  font-size: 14px;
-  color: #d1d5db;
-}
-
-.compact-checkbox input {
-  width: auto;
-}
-.stat-row {
   background: #374151;
   padding: 16px;
   border-radius: 18px;
   margin-bottom: 12px;
+}
+
+.match-row {
+  display: grid;
+  gap: 4px;
+}
+
+.match-row span,
+.match-row small,
+.head-to-head-box small {
+  color: #d1d5db;
 }
 
 .stat-card-top {
@@ -333,8 +292,15 @@ button:active {
   align-items: center;
 }
 
-.stat-card-top strong {
+.player-link {
+  color: white;
+  text-decoration: none;
   font-size: 20px;
+  font-weight: bold;
+}
+
+.player-link:hover {
+  color: #22c55e;
 }
 
 .winrate {
@@ -350,95 +316,79 @@ button:active {
   color: #d1d5db;
   font-size: 14px;
 }
-input[type="date"] {
-  width: 100%;
-  padding: 14px;
-  border-radius: 12px;
-  border: none;
-  font-size: 16px;
-  margin-top: 8px;
-  background: white;
-  color: #111827;
+
+.head-to-head-box {
+  margin-top: 14px;
+  text-align: center;
 }
-.date-filter-row {
+
+.head-to-head-box div {
+  font-size: 32px;
+  font-weight: bold;
+  margin: 10px 0;
+  color: #22c55e;
+}
+
+.compact-checkbox {
   display: flex;
-  gap: 10px;
+  align-items: center;
+  gap: 8px;
+  margin: 14px 0 6px;
+  font-size: 14px;
+  color: #d1d5db;
+}
+
+.compact-checkbox input,
+.random-order-label input {
+  width: auto;
+}
+
+/* Filter */
+
+.date-filter-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
   margin-bottom: 14px;
 }
 
 .date-filter-item {
-  flex: 1;
+  min-width: 0;
 }
 
-.date-filter-item small {
+.date-filter-item small,
+.game-filter-item small {
   display: block;
   margin-bottom: 4px;
   color: #d1d5db;
 }
 
-.date-filter-item input {
-  width: 100%;
-  padding: 10px;
-  border-radius: 10px;
-  border: none;
-  font-size: 14px;
+.date-filter-item input[type="date"] {
+  min-width: 0;
+  padding: 10px 8px;
+  font-size: 13px;
 }
-@media (min-width: 900px) {
 
-  .app {
-    max-width: 760px;
-    margin: 0 auto;
-  }
-
-  .date-filter-row {
-    max-width: 420px;
-    margin: 0 auto 14px;
-  }
-
-  .filter-button-row {
-    max-width: 540px;
-    margin: 0 auto;
-  }
-
-  .card button {
-    max-width: unset;
-  }
-
-  .card {
-    padding: 18px;
-  }
+.game-filter-item {
+  margin-bottom: 14px;
 }
+
+.game-filter-item select {
+  margin-top: 0;
+}
+
 .filter-button-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
 
 .filter-button-row button {
-  flex: 1;
-}
-.stats-grid {
-  display: grid;
-  gap: 16px;
+  margin-top: 0;
 }
 
-@media (min-width: 900px) {
+/* Spielerprofil */
 
-  .stats-grid {
-    grid-template-columns: 1fr 1fr;
-    align-items: start;
-  }
-
-}
-.player-link {
-  color: white;
-  text-decoration: none;
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.player-link:hover {
-  color: #22c55e;
-}
 .profile-stat-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -463,45 +413,28 @@ input[type="date"] {
   font-size: 28px;
   color: #22c55e;
 }
-.game-filter-item {
-  margin-bottom: 14px;
-}
 
-.game-filter-item small {
-  display: block;
-  margin-bottom: 4px;
-  color: #d1d5db;
-}
+/* Desktop / Tablet */
 
-.game-filter-item select {
-  margin-top: 0;
-}
-@media (max-width: 600px) {
+@media (min-width: 900px) {
+  .app {
+    max-width: 760px;
+  }
 
-  .date-filter-row {
-    display: grid;
+  .score-board {
     grid-template-columns: 1fr 1fr;
-    gap: 8px;
   }
 
-  .game-filter-item {
-    margin-top: 10px;
+  .number-grid {
+    grid-template-columns: repeat(7, 1fr);
   }
 
-  .game-filter-item select {
-    width: 100%;
-    font-size: 15px;
-    padding: 12px;
-  }
-
-  .filter-button-row {
-    display: grid;
+  .stats-grid {
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    align-items: start;
   }
 
-  .filter-button-row button {
-    font-size: 15px;
-    padding: 12px 8px;
+  .card {
+    padding: 18px;
   }
 }
